@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingList.API", "ShoppingList\ShoppingList.API.csproj", "{7C8396B0-9AFA-48EF-BB85-C3A53179DC08}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingList.Domain", "ShoppingList.Domain\ShoppingList.Domain.csproj", "{81E55E44-A96C-442B-BC63-1030F6B44FFD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingList.Application", "ShoppingList.Application\ShoppingList.Application.csproj", "{6BB6131E-0A75-49FF-9B34-45FDE48FFFAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingList.Infrastructure", "ShoppingList.Infrastructure\ShoppingList.Infrastructure.csproj", "{C9A3A688-6CB8-499E-B59C-1A10D485523E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWTToken", "JWTToken\JWTToken.csproj", "{DDF98892-B7D0-4C68-B584-C8C8B34EC83A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C8396B0-9AFA-48EF-BB85-C3A53179DC08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C8396B0-9AFA-48EF-BB85-C3A53179DC08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C8396B0-9AFA-48EF-BB85-C3A53179DC08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C8396B0-9AFA-48EF-BB85-C3A53179DC08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81E55E44-A96C-442B-BC63-1030F6B44FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81E55E44-A96C-442B-BC63-1030F6B44FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81E55E44-A96C-442B-BC63-1030F6B44FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81E55E44-A96C-442B-BC63-1030F6B44FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB6131E-0A75-49FF-9B34-45FDE48FFFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB6131E-0A75-49FF-9B34-45FDE48FFFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB6131E-0A75-49FF-9B34-45FDE48FFFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB6131E-0A75-49FF-9B34-45FDE48FFFAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A3A688-6CB8-499E-B59C-1A10D485523E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A3A688-6CB8-499E-B59C-1A10D485523E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A3A688-6CB8-499E-B59C-1A10D485523E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A3A688-6CB8-499E-B59C-1A10D485523E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF98892-B7D0-4C68-B584-C8C8B34EC83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF98892-B7D0-4C68-B584-C8C8B34EC83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF98892-B7D0-4C68-B584-C8C8B34EC83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF98892-B7D0-4C68-B584-C8C8B34EC83A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27A2332C-7ACA-43DF-8E0E-D5B8C14733AA}
+	EndGlobalSection
+EndGlobal
