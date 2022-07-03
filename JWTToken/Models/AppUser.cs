@@ -1,6 +1,8 @@
-﻿namespace JWTToken.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace JWTToken.Models
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
         public int Id { get; set; }
         public string Email { get; set; }

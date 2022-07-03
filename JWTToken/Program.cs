@@ -1,3 +1,4 @@
+using JWTToken.Context;
 using JWTToken.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -15,11 +16,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var configuration = builder.Configuration;
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<MyDbContext>(options =>
 options.UseSqlServer(configuration.GetConnectionString("Default")));
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddEntityFrameworkStores<MyDbContext>()
     .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>

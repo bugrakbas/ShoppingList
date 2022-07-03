@@ -1,4 +1,5 @@
-﻿using JWTToken.CreateToken;
+﻿using JWTToken.Context;
+using JWTToken.CreateToken;
 using JWTToken.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,16 +21,16 @@ namespace JWTToken.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         CreateJwtToken createJwtToken;
-        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly MyDbContext _myDbContext;
         #endregion
         #region Constructor
-        public JwtController(List<Claim> claims, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, CreateJwtToken createJwtToken, ApplicationDbContext applicationDbContext)
+        public JwtController(List<Claim> claims, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, CreateJwtToken createJwtToken, MyDbContext myDbContext)
         {
             this.claims = claims;
             _userManager = userManager;
             _roleManager = roleManager;
             this.createJwtToken = createJwtToken;
-            _applicationDbContext = applicationDbContext;
+            _myDbContext = myDbContext;
         }
         #endregion
         [HttpPost("login")]

@@ -5,6 +5,8 @@ using ShoppingList.Application.Categories.Queries.GetCategory;
 using ShoppingList.Application.Commands.CreateCategory;
 using ShoppingList.Application.Product.Commands.CreateProduct;
 using ShoppingList.Application.Product.Queries.GetProducts;
+using ShoppingList.Application.Users.Commands.CreateUser;
+using ShoppingList.Application.Users.Queries.GetUser;
 using ShoppingList.Domain.Entities;
 
 namespace ShoppingList.API.Controllers
@@ -34,6 +36,12 @@ namespace ShoppingList.API.Controllers
             Category result = await Mediator.Send(command);
             return Ok(result);
         }
+        [HttpPost("user")]
+        public async Task<IActionResult> Create(CreateUserCommand command)
+        {
+            User result = await Mediator.Send(command);
+            return Ok(result);
+        }
         [HttpGet("product")]
         public async Task<IActionResult> GetAllProduct()
         {
@@ -45,6 +53,12 @@ namespace ShoppingList.API.Controllers
         {
             List<CategoryDto> categoryList = await Mediator.Send(new GetCategoryQuery());
             return categoryList.Any() ? Ok(categoryList) : NotFound();
+        }
+        [HttpGet("user")]
+        public async Task<IActionResult> GetAllUser()
+        {
+            List<UserDto> userList = await Mediator.Send(new GetUserQuery());
+            return userList.Any() ? Ok(userList) : NotFound();
         }
         [HttpGet("category/{name}")]
         public async Task<CategoryDto> GetByCategoryName(string name)
@@ -62,6 +76,15 @@ namespace ShoppingList.API.Controllers
             var result = products.SingleOrDefault(x => x.Name.Equals(name));
             if (result == null)
                 throw new Exception("Ürün bulunamadı");
+            return result;
+        }
+        [HttpGet("user/{name}")]
+        public async Task<UserDto> GetByUserName(string name)
+        {
+            List<UserDto> users = await Mediator.Send(new GetUserQuery());
+            var result = users.SingleOrDefault(x => x.FirstName.Equals(name));
+            if (result == null)
+                throw new Exception("Kişi bulunamadı");
             return result;
         }
         [HttpGet("category/{date}")]

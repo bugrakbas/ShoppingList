@@ -23,6 +23,10 @@ namespace ShoppingList.Application.Product.Commands.CreateProduct
                 .NotEmpty();
             RuleFor(r => r.CategoryId)
                 .NotEmpty();
+            RuleFor(r => r.IsReceived)
+                .NotEmpty();
+            RuleFor(r => r.Mesures)
+                .NotEmpty();
         }
     }
 }

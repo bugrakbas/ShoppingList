@@ -25,7 +25,9 @@ namespace ShoppingList.Application.Product.Commands.CreateProduct
                 Name = request.Name,
                 Price = request.Price,
                 Feature = request.Feature,
-                CategoryId = request.CategoryId
+                CategoryId = request.CategoryId,
+                IsReceived = request.IsReceived,
+                Mesures = request.Mesures
             };
             await _productRepository.Add(product);
 
