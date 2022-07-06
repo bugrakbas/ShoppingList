@@ -26,13 +26,11 @@ namespace ShoppingList.Infrastructure.Persistence.Repositories
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(T entity)
         {
-            var current = _dbSet.FirstOrDefault(x => x.Id == id);
-            if (current == null) throw new Exception("");
 
-            _dbSet.Remove(current);
-            _applicationDbContext.SaveChanges();
+            _dbSet.Remove(entity);
+            await _applicationDbContext.SaveChangesAsync();
         }
 
         public IEnumerable<T> Get(Expression<Func<T, bool>> expression)
@@ -52,10 +50,11 @@ namespace ShoppingList.Infrastructure.Persistence.Repositories
             return current;
         }
 
-        public  void Update(T entity)
+        public async Task<T> Update(T entity)
         {
             _dbSet.Update(entity);
-            _applicationDbContext.SaveChanges();
+            await _applicationDbContext.SaveChangesAsync();
+            return entity;
         }
     }
 }

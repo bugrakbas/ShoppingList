@@ -10,6 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.InstanceName = "RedisCacheServer";
+    options.Configuration = "localhost";
+});
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

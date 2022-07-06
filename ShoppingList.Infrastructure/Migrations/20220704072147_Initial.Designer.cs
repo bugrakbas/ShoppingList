@@ -12,7 +12,7 @@ using ShoppingList.Infrastructure.Persistence.Contexts;
 namespace ShoppingList.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220703125824_Initial")]
+    [Migration("20220704072147_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -304,9 +304,8 @@ namespace ShoppingList.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("SurName")
                         .IsRequired()

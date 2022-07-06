@@ -26,8 +26,6 @@ namespace ShoppingList.Application.Users.Commands.CreateUser
                 .MinimumLength(6)
                 .MaximumLength(15)
                 .NotEmpty();
-            RuleFor(r => r.Role)
-                .NotEmpty();
 
         }
     }

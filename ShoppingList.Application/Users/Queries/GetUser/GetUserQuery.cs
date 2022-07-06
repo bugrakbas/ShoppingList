@@ -26,16 +26,16 @@ namespace ShoppingList.Application.Users.Queries.GetUser
 
             var result = userList.Select(userDto => new UserDto()
             {
-               FirstName = userDto.FirstName,
-               SurName = userDto.SurName,
-               Email = userDto.Email,
-               Password = userDto.Password,
-               Role = userDto.Role
+                FirstName = userDto.FirstName,
+                SurName = userDto.SurName,
+                Email = userDto.Email,
+                Password = userDto.Password,
+                Role = userDto.Role
             });
 
             return result.ToList();
         }
     }
 
-   
+
 }

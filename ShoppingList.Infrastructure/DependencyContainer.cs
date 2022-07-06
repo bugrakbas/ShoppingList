@@ -20,6 +20,7 @@ namespace ShoppingList.Infrastructure
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ICategoryDtoRepository, CategoryDtoRepository>();
             return services;
         }
     }

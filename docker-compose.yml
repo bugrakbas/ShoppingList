@@ -1,0 +1,8 @@
+version: '3.9'
+
+services:
+  myredis:
+    image: redis/redis-stack:latest
+    ports:
+      - "6379:6379"
+      - "8001:8001"

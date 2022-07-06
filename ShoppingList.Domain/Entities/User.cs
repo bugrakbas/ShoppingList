@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoppingList.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace ShoppingList.Domain.Entities
         /// <summary>
         /// Rolü(Admin,Kullanıcı)
         /// </summary>
-        public string Role { get; set; }
+        public Roles Role { get; set; }
 
     }
 }

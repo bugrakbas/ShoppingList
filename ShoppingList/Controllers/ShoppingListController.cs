@@ -1,13 +1,20 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using ShoppingList.Application.Categories.Queries.GetCategory;
 using ShoppingList.Application.Commands.CreateCategory;
+using ShoppingList.Application.Common.Interfaces.Repositories;
 using ShoppingList.Application.Product.Commands.CreateProduct;
 using ShoppingList.Application.Product.Queries.GetProducts;
 using ShoppingList.Application.Users.Commands.CreateUser;
 using ShoppingList.Application.Users.Queries.GetUser;
+using ShoppingList.Domain.DTOs;
 using ShoppingList.Domain.Entities;
+using System.Text;
+using System.Text.Json;
 
 namespace ShoppingList.API.Controllers
 {
@@ -23,6 +30,17 @@ namespace ShoppingList.API.Controllers
     [ApiController]
     public class ShoppingListController : BaseController
     {
+        private readonly IMemoryCache _memoryCache;
+        private readonly IDistributedCache _distributedCache;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryDtoRepository _categoryDtoRepository;
+        public ShoppingListController(IMemoryCache memoryCache, IDistributedCache distributedCache, ICategoryRepository categoryRepository, ICategoryDtoRepository categoryDtoRepository)
+        {
+            _memoryCache = memoryCache;
+            _distributedCache = distributedCache;
+            _categoryRepository = categoryRepository;
+            _categoryDtoRepository = categoryDtoRepository;
+        }
 
         [HttpPost("product")]
         public async Task<IActionResult> Create(CreateProductCommand command)
@@ -37,7 +55,7 @@ namespace ShoppingList.API.Controllers
             return Ok(result);
         }
         [HttpPost("user")]
-        public async Task<IActionResult> Create(CreateUserCommand command)
+        public async Task<IActionResult> Register(CreateUserCommand command)
         {
             User result = await Mediator.Send(command);
             return Ok(result);
@@ -51,14 +69,63 @@ namespace ShoppingList.API.Controllers
         [HttpGet("category")]
         public async Task<IActionResult> GetAllCategory()
         {
-            List<CategoryDto> categoryList = await Mediator.Send(new GetCategoryQuery());
-            return categoryList.Any() ? Ok(categoryList) : NotFound();
+            IActionResult retVal = null;
+            List<CategoryDto> categories = null;
+            byte[] cached = _distributedCache.Get("category");
+            if (cached == null)
+            {
+                categories = await Mediator.Send(new GetCategoryQuery());
+            }
+            else
+            {
+                string jsonData = Encoding.UTF8.GetString(cached);
+                categories = JsonSerializer.Deserialize<List<CategoryDto>>(jsonData);
+            }
+            if (categories == null)
+            {
+                retVal = BadRequest();
+            }
+            else
+            {
+                if (cached == null)
+                {
+                    string jsonCategories = JsonSerializer.Serialize(categories);
+                    _distributedCache.Set("category", Encoding.UTF8.GetBytes(jsonCategories), new DistributedCacheEntryOptions() { AbsoluteExpiration = DateTime.Now.AddMinutes(2) });
+                }
+                retVal = Ok(categories);
+            }
+            return retVal;
         }
-        [HttpGet("user")]
+        [HttpGet("GelAllUsers")]
         public async Task<IActionResult> GetAllUser()
         {
-            List<UserDto> userList = await Mediator.Send(new GetUserQuery());
-            return userList.Any() ? Ok(userList) : NotFound();
+            IActionResult retVal = null;
+            List<UserDto> users = null;
+            byte[] cached = _distributedCache.Get("GetAllUsers");
+            if (cached == null)
+            {
+
+                users = await Mediator.Send(new GetUserQuery());
+            }
+            else
+            {
+                string jsonData = Encoding.UTF8.GetString(cached);
+                users = JsonSerializer.Deserialize<List<UserDto>>(jsonData);
+            }
+            if (users == null)
+            {
+                retVal = BadRequest();
+            }
+            else
+            {
+                if (cached == null)
+                {
+                    string jsonUsers = JsonSerializer.Serialize(users);
+                    _distributedCache.Set("GetAllUsers", Encoding.UTF8.GetBytes(jsonUsers), new DistributedCacheEntryOptions() { AbsoluteExpiration = DateTime.Now.AddMinutes(2) });
+                }
+                retVal = Ok(users);
+            }
+            return retVal;
         }
         [HttpGet("category/{name}")]
         public async Task<CategoryDto> GetByCategoryName(string name)
@@ -95,6 +162,30 @@ namespace ShoppingList.API.Controllers
             if (result == null)
                 throw new Exception("Bu tarihte oluşturulan bir category bulunamadı.");
             return result;
+        }
+        [HttpPut("category")]
+        public async Task<IActionResult> Update([FromBody] CategoryDtos categoryDto)
+        {
+            
+            CategoryDtos result = await _categoryDtoRepository.Update(categoryDto);
+            IActionResult retVal = null;
+            if (result != null)
+            {
+                _distributedCache.RemoveAsync("category");
+                retVal = Ok(result);
+            }
+            else
+            {
+                retVal = BadRequest(result);
+            }
+            return retVal;
+        }
+        [HttpDelete("category")]
+        public async Task<IActionResult> Delete([FromQuery] int id)
+        {
+            Category category = _categoryRepository.GetById(id);
+            _categoryRepository.Delete(category);
+            return Ok();
         }
     }
 }

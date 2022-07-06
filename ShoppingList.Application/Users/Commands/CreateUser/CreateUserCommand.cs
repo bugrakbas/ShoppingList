@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ShoppingList.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace ShoppingList.Application.Users.Commands.CreateUser
 
         public string Password { get; init; }
 
-        public string Role { get; init; }
+        public Roles Role { get; init; }
     }
 }

@@ -69,6 +69,52 @@ namespace JwtTokenApi.Controllers
             }
             return BadRequest();
         }
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequestDto userLogin)
+        {
+            if (ModelState.IsValid)
+            {
+                var existing_user = await _userManager.FindByEmailAsync(userLogin.Email);
+                if (existing_user == null)
+                {
+                    return BadRequest(new AuthResult()
+                    {
+                        Errors = new List<string>()
+                        {
+                            "Invalid payload"
+                        },
+                        Result = false
+                    });
+                }
+                var isCorrect = await _userManager.CheckPasswordAsync(existing_user, userLogin.Password);
+                if (!isCorrect)
+                {
+
+                    return BadRequest(new AuthResult()
+                    {
+                        Errors = new List<string>()
+                        {
+                            "Invalid Credentials"
+                        },
+                        Result= false
+                    });
+                }
+                var jwtToken = GenerateJwtToken(existing_user);
+                return Ok(new AuthResult()
+                {
+                    Token = jwtToken,
+                    Result = true
+                });
+            }
+            return BadRequest(new AuthResult()
+            {
+                Errors = new List<string>()
+                {
+                    "Invalid payload"
+                },
+                Result = false
+            });
+        }
         private string GenerateJwtToken(IdentityUser user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
